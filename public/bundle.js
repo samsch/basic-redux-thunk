@@ -65,7 +65,7 @@
 	var Provider = _require2.Provider;
 	
 	var reducer = __webpack_require__(/*! ./RootReducer */ 179);
-	var App = __webpack_require__(/*! ./containers/App */ 182);
+	var App = __webpack_require__(/*! ./containers/App */ 184);
 	
 	var logger = createLogger();
 	
@@ -21799,7 +21799,7 @@
 	var combineReducers = _require.combineReducers;
 	
 	var nameReducer = __webpack_require__(/*! ./reducers/NameReducer */ 180);
-	var asyncReducer = __webpack_require__(/*! ./reducers/AsyncReducer */ 184);
+	var asyncReducer = __webpack_require__(/*! ./reducers/AsyncReducer */ 182);
 	
 	module.exports = combineReducers({
 	    appName: nameReducer,
@@ -21857,6 +21857,82 @@
 
 /***/ },
 /* 182 */
+/*!**************************************!*\
+  !*** ./src/reducers/AsyncReducer.js ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _require = __webpack_require__(/*! ../actions/AsyncData */ 183);
+	
+	var UPDATE_ASYNC_DATA = _require.UPDATE_ASYNC_DATA;
+	
+	
+	var AsyncReducer = function AsyncReducer() {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+	    var action = arguments[1];
+	
+	    if (action.type === UPDATE_ASYNC_DATA) {
+	        if (action.meta === 'request') {
+	            return {
+	                loading: true
+	            };
+	        } else if (action.meta === 'finished') {
+	            return {
+	                loading: false,
+	                data: action.payload
+	            };
+	        }
+	    }
+	    return state;
+	};
+	
+	module.exports = AsyncReducer;
+
+/***/ },
+/* 183 */
+/*!**********************************!*\
+  !*** ./src/actions/AsyncData.js ***!
+  \**********************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	//Using the module path in the action type value means that if you use the same
+	//action name in another place, they won't conflict when dispatched. You can
+	//also use random values, or another unique identifier.
+	var UPDATE_ASYNC_DATA = 'actions/AsyncData/UPDATE_ASYNC_DATA';
+	
+	var getData = function getData() {
+	    //The thunk is also passed the state as a second parameter, but it's not
+	    //needed very frequently.
+	    return function (dispatch) {
+	        //These actions use the meta property to denote what they are doing.
+	        //Another solution is to use separate action types.
+	        dispatch({
+	            type: UPDATE_ASYNC_DATA,
+	            meta: 'request'
+	        });
+	        //Normally, you'd have an ajax call, or some other asynchronous action
+	        //beside a setTimeout.
+	        setTimeout(function () {
+	            dispatch({
+	                type: UPDATE_ASYNC_DATA,
+	                meta: 'finished',
+	                payload: 'New asynchronous data!'
+	            });
+	        }, 1000);
+	    };
+	};
+	
+	module.exports = {
+	    UPDATE_ASYNC_DATA: UPDATE_ASYNC_DATA,
+	    getData: getData
+	};
+
+/***/ },
+/* 184 */
 /*!*******************************!*\
   !*** ./src/containers/App.js ***!
   \*******************************/
@@ -21939,73 +22015,6 @@
 	module.exports = connect(function (state) {
 	    return state;
 	})(App);
-
-/***/ },
-/* 183 */
-/*!**********************************!*\
-  !*** ./src/actions/AsyncData.js ***!
-  \**********************************/
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	var UPDATE_ASYNC_DATA = 'actions/AsyncData/UPDATE_ASYNC_DATA';
-	
-	var getData = function getData() {
-	    return function (dispatch) {
-	        dispatch({
-	            type: UPDATE_ASYNC_DATA,
-	            meta: 'request'
-	        });
-	        setTimeout(function () {
-	            dispatch({
-	                type: UPDATE_ASYNC_DATA,
-	                meta: 'finished',
-	                payload: 'New Asyncronous Data!'
-	            });
-	        }, 1000);
-	    };
-	};
-	
-	module.exports = {
-	    UPDATE_ASYNC_DATA: UPDATE_ASYNC_DATA,
-	    getData: getData
-	};
-
-/***/ },
-/* 184 */
-/*!**************************************!*\
-  !*** ./src/reducers/AsyncReducer.js ***!
-  \**************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _require = __webpack_require__(/*! ../actions/AsyncData */ 183);
-	
-	var UPDATE_ASYNC_DATA = _require.UPDATE_ASYNC_DATA;
-	
-	
-	var AsyncReducer = function AsyncReducer() {
-	    var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
-	    var action = arguments[1];
-	
-	    if (action.type === UPDATE_ASYNC_DATA) {
-	        if (action.meta === 'request') {
-	            return {
-	                loading: true
-	            };
-	        } else if (action.meta === 'finished') {
-	            return {
-	                loading: false,
-	                data: action.payload
-	            };
-	        }
-	    }
-	    return state;
-	};
-	
-	module.exports = AsyncReducer;
 
 /***/ }
 /******/ ]);

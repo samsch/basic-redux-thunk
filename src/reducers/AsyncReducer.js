@@ -1,6 +1,6 @@
 const { UPDATE_ASYNC_DATA } = require('../actions/AsyncData');
 
-let AsyncReducer = function(state = false, action) {
+const AsyncReducer = function(state = false, action) {
     if(action.type === UPDATE_ASYNC_DATA) {
         if(action.meta === 'request') {
             return {

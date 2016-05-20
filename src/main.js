@@ -1,15 +1,15 @@
-let React = require('react');
-let ReactDOM = require('react-dom');
-let { createStore, applyMiddleware } = require('redux');
-let thunk = require('redux-thunk');
-let createLogger = require('redux-logger');
-let { Provider } = require('react-redux');
-let reducer = require('./RootReducer');
-let App = require('./containers/App');
+const React = require('react');
+const ReactDOM = require('react-dom');
+const { createStore, applyMiddleware } = require('redux');
+const thunk = require('redux-thunk').default;
+const createLogger = require('redux-logger');
+const { Provider } = require('react-redux');
+const reducer = require('./RootReducer');
+const App = require('./containers/App');
 
-let logger = createLogger();
+const logger = createLogger();
 
-let store = createStore(
+const store = createStore(
     reducer,
     applyMiddleware(thunk, logger)
 );

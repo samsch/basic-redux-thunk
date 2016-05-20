@@ -1,10 +1,10 @@
-let React = require('react');
-let { connect } = require('react-redux');
-let PropTypes = React.PropTypes;
-let { updateName } = require('../actions/UpdateAction');
-let { getData } = require('../actions/AsyncData');
+const React = require('react');
+const { connect } = require('react-redux');
+const PropTypes = React.PropTypes;
+const { updateName } = require('../actions/UpdateAction');
+const { getData } = require('../actions/AsyncData');
 
-let App = React.createClass({
+const App = React.createClass({
 
     render: function() {
         return (

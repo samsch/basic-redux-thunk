@@ -4,7 +4,7 @@
 //also use random values, or another unique identifier.
 const UPDATE_ASYNC_DATA = 'actions/AsyncData/UPDATE_ASYNC_DATA';
 
-let getData = function() {
+const getData = function() {
     //The thunk is also passed the state as a second parameter, but it's not
     //needed very frequently.
     return function(dispatch) {
